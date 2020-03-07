@@ -24,14 +24,12 @@ const NotesApp = () => {
   }, [])
 
   useEffect(() => {
-    if (notes.length) {
-      notesStorageService.submitNotes(notes)
-        .then(savedOk => {
-          console.log({ savedOk, notes })
-        }, err => {
-          console.error(err)
-        })
-    }
+    notesStorageService.submitNotes(notes)
+      .then(savedOk => {
+        console.log({ savedOk, notes })
+      }, err => {
+        console.error(err)
+      })
   }, [ notes ])
 
   return (
