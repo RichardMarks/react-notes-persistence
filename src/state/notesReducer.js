@@ -8,7 +8,21 @@ const notesReducer = (notes, action) => {
     case NotesActions.LOAD_NOTES:
       return action.notes
     case NotesActions.EXPORT_NOTES:
-      notesExportUtils.exportAsJSON(notes)
+      switch (action.format) {
+        case 'json':
+          notesExportUtils.exportAsJSON(notes, action.filename)
+          break
+        case 'xml':
+          notesExportUtils.exportAsXML(notes, action.filename)
+          break
+        case 'bin':
+          notesExportUtils.exportAsBinary(notes, action.filename)
+          break
+        default:
+          console.warn(`Unknown export format: ${action.format} - using JSON`)
+          notesExportUtils.exportAsJSON(notes, action.filename)
+          break
+      }
       return notes
     case NotesActions.CREATE_NOTE:
       const note = {
